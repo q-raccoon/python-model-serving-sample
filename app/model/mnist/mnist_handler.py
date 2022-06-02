@@ -13,7 +13,8 @@ class MnistHandler(Handler):
         super().__init__()
 
     def handler(self, request):
-        predictions = self.serving_fn(reshape_input=request)[self.output_keys[0]]
+        # [TODO] Fix the specific argument of `serving_fn` method.
+        predictions = self.serving_fn(input_1=request)[self.output_keys[0]]
         
         prediction = int(np.argmax(predictions[0]))
         confidence = float(predictions[0][prediction])
