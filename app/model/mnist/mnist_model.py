@@ -1,7 +1,8 @@
+import os
 import tensorflow as tf
-from export_model import ExportModel
+from ..export_model  import ExportModel
 
-class MnistModel(tf.keras.Model):
+class MnistModel(tf.keras.Model, ExportModel):
     def __init__(self):
         super(MnistModel, self).__init__()
     
@@ -49,6 +50,8 @@ if __name__ == "__main__":
     model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
-    model.fit(x_train, y_train, epochs=5)
+    model.fit(x_train, y_train, epochs=1)
     model.evaluate(x_test, y_test, verbose=2)
-    tf.keras.models.save_model(model, "./mnist/saved_model")
+
+    export_path = os.environ.get("MODEL_EXPORT_PATH", "/tmp/mnist/saved_model")
+    tf.keras.models.save_model(model, export_path)
