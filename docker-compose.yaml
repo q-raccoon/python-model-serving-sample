@@ -1,0 +1,9 @@
+version: '0.1'
+
+services:
+  api:
+    build: 
+      context: .
+      dockerfile: ./app/Dockerfile
+    ports:
+      - 8000:8080
