@@ -1,34 +1,15 @@
-from predict import get_predictions
-from enum import Enum
 import time
+from routers import image_classification
 from loguru import logger
-from fastapi import FastAPI, UploadFile, File, Request
-from PIL import Image, ImageOps
-from io import BytesIO
+from fastapi import FastAPI, Request
 import numpy as np
 
 app = FastAPI()
-
-def read_imagefile(file) -> Image.Image:
-    image = Image.open(BytesIO(file))
-    gray_image = ImageOps.grayscale(image)
-    np_image = np.asarray(gray_image)
-    return np_image
+app.include_router(image_classification.router)
 
 @app.get("/")
 async def read_root():
     return {"Predict"}
-
-@app.post("/predict/image")
-async def predict_api(file: UploadFile = File(...)):
-    extension = file.filename.split(".")[-1] in ("jpg", "jpeg", "png")
-    if not extension:
-        return "Image must be jpg or png format!"
-
-    np_image = read_imagefile(await file.read())
-
-    logits, confidence = get_predictions(np_image)
-    return {"predict": logits, "confidence": confidence}
 
 @app.middleware("http")
 async def check_inference_latency(request: Request, call_next):
