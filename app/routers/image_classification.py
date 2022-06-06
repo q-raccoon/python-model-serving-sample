@@ -9,10 +9,11 @@ import numpy as np
 router = APIRouter()
 
 
-def read_imagefile(file) -> Image.Image:
+def read_imagefile(dataset: Dataset, file: UploadFile) -> Image.Image:
     image = Image.open(BytesIO(file))
-    gray_image = ImageOps.grayscale(image)
-    np_image = np.asarray(gray_image)
+    if dataset == Dataset.mnist:
+        image = ImageOps.grayscale(image)
+    np_image = np.asarray(image)
     return np_image
 
 
@@ -22,7 +23,7 @@ async def predict_api(dataset: Dataset = Dataset.mnist, file: UploadFile = File(
     if not extension:
         return "Image must be jpg or png format!"
 
-    np_image = read_imagefile(await file.read())
+    np_image = read_imagefile(dataset, await file.read())
 
     logits, confidence = get_predictions(dataset, np_image)
     return {"predict": logits, "confidence": confidence}

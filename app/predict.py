@@ -1,27 +1,25 @@
-from process.preprocess import normalize
 from loguru import logger
-from model.mnist.mnist_handler import MnistHandler
+from model.mnist.mnist_inference import MnistInference
 from data.dataset import Dataset
 import numpy as np
 
-mnist_handler = None
+mnist_inference = None
 
 
 def get_predictions(dataset: Dataset = Dataset.mnist, image: np.array = None):
 
-    handler = None
+    inference = None
     if dataset == Dataset.mnist:
-        global mnist_handler
-        if mnist_handler is None:
-            mnist_handler = MnistHandler()
-        handler = mnist_handler
+        global mnist_inference
+        if mnist_inference is None:
+            mnist_inference = MnistInference()
+        inference = mnist_inference
     else:
         raise RuntimeError("`{}` is not supported yet.".format(dataset))
         
     try:
         logger.debug("Image: [{}]".format(image.shape))
-        normalized_image = normalize(image)
-        predictions = handler.handler(normalized_image)
+        predictions = inference(image)
     except Exception as e:
         raise RuntimeError(e)
 
