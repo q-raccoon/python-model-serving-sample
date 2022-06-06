@@ -1,6 +1,8 @@
 from predict import get_predictions
+from enum import Enum
+import time
 from loguru import logger
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, Request
 from PIL import Image, ImageOps
 from io import BytesIO
 import numpy as np
@@ -27,3 +29,11 @@ async def predict_api(file: UploadFile = File(...)):
 
     logits, confidence = get_predictions(np_image)
     return {"predict": logits, "confidence": confidence}
+
+@app.middleware("http")
+async def check_inference_latency(request: Request, call_next):
+    start_time = time.perf_counter()
+    response = await call_next(request)
+    inference_latency = time.perf_counter() - start_time
+    logger.info("inference latency: %.6f (sec)" % (inference_latency))
+    return response
