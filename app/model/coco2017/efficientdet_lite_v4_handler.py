@@ -8,7 +8,7 @@ import os
 class EfficientDetLiteV4Handler(Handler):
     def __init__(self) -> None:
         self.export_path = os.environ.get(
-            "DET_MODEL_EXPORT_PATH", "/tmp/coco2017/efficientdet_lite4_detection_2")
+            "DET_MODEL_EXPORT_PATH", "/tmp/coco2017/efficientdet_lite4_detection")
         if not os.path.exists(self.export_path):
             raise RuntimeError(
                 "Model export path is not exist. [{}]".format(self.export_path))
