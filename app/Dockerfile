@@ -5,10 +5,12 @@ LABEL version="0.1"
 LABEL description="Model serving using `Tensorflow` and `FastAPI`"
 
 ENV MODEL_EXPORT_PATH="/code/mnist/saved_model"
+ENV DET_MODEL_EXPORT_PATH="/code/coco2017/efficientdet_lite4_detection_2"
 
 WORKDIR /code
 
 COPY ./mnist /code/mnist
+COPY ./code/coco2017/ /code/coco2017
 
 COPY ./requirements.txt /code/requirements.txt
 

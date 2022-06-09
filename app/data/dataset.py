@@ -2,4 +2,4 @@ from enum import Enum
 
 class Dataset(str, Enum):
     mnist = "MNIST"
-    imagenet = "IMAGENET"
+    coco2017 = "COCO2017"

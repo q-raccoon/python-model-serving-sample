@@ -1,10 +1,11 @@
 from loguru import logger
 from model.mnist.mnist_inference import MnistInference
+from model.coco2017.efficientdet_lite_v4_inference import EfficientDetLiteV4Inference
 from data.dataset import Dataset
 import numpy as np
 
 mnist_inference = None
-
+efficient_det_lite_v4_inference = None
 
 def get_predictions(dataset: Dataset = Dataset.mnist, image: np.array = None):
 
@@ -14,6 +15,11 @@ def get_predictions(dataset: Dataset = Dataset.mnist, image: np.array = None):
         if mnist_inference is None:
             mnist_inference = MnistInference()
         inference = mnist_inference
+    elif dataset == Dataset.coco2017:
+        global efficient_det_lite_v4_inference
+        if efficient_det_lite_v4_inference is None:
+            efficient_det_lite_v4_inference = EfficientDetLiteV4Inference()
+        inference = efficient_det_lite_v4_inference
     else:
         raise RuntimeError("`{}` is not supported yet.".format(dataset))
         
