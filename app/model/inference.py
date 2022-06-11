@@ -1,6 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import Union
-import numpy as np
+from PIL import Image
 
 
 class Inference(metaclass=ABCMeta):
@@ -8,9 +7,9 @@ class Inference(metaclass=ABCMeta):
         super(Inference, self).__init__()
 
     @abstractmethod
-    def call(self, image: np.array):
+    def call(self, image: Image.Image):
         pass
 
     @abstractmethod
-    def preprocess(self, image: np.array) -> np.array:
+    def preprocess(self, image: Image.Image):
         pass
