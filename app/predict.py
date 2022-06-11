@@ -2,12 +2,13 @@ from loguru import logger
 from model.mnist.mnist_inference import MnistInference
 from model.coco2017.efficientdet_lite_v4_inference import EfficientDetLiteV4Inference
 from data.dataset import Dataset
-import numpy as np
+from PIL import Image
 
 mnist_inference = None
 efficient_det_lite_v4_inference = None
 
-def get_predictions(dataset: Dataset = Dataset.mnist, image: np.array = None):
+
+def get_predictions(dataset: Dataset = Dataset.mnist, image: Image.Image = None):
 
     inference = None
     if dataset == Dataset.mnist:
@@ -22,13 +23,13 @@ def get_predictions(dataset: Dataset = Dataset.mnist, image: np.array = None):
         inference = efficient_det_lite_v4_inference
     else:
         raise RuntimeError("`{}` is not supported yet.".format(dataset))
-        
+
     try:
-        logger.debug("Image: [{}]".format(image.shape))
+        logger.debug("Ipunt image height: {}, width: {}".format(
+            image.height, image.width))
         predictions = inference(image)
     except Exception as e:
         raise RuntimeError(e)
-
 
     logger.info("{}".format(predictions))
     return predictions

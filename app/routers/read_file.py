@@ -8,5 +8,4 @@ def read_imagefile(dataset: Dataset, file: UploadFile) -> Image.Image:
     image = Image.open(BytesIO(file))
     if dataset == Dataset.mnist:
         image = ImageOps.grayscale(image)
-    np_image = np.asarray(image)
-    return np_image
+    return image

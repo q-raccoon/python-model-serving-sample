@@ -12,8 +12,8 @@ async def predict_api(dataset: Dataset = Dataset.coco2017, file: UploadFile = Fi
     if not extension:
         return "Image must be jpg or png format!"
 
-    np_image = read_imagefile(dataset, await file.read())
+    pil_image = read_imagefile(dataset, await file.read())
 
     # TODO
-    get_predictions(dataset, np_image)
+    get_predictions(dataset, pil_image)
     return {"predict": ""}

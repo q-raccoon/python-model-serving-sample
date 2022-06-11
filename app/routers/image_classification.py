@@ -12,7 +12,7 @@ async def predict_api(dataset: Dataset = Dataset.mnist, file: UploadFile = File(
     if not extension:
         return "Image must be jpg or png format!"
 
-    np_image = read_imagefile(dataset, await file.read())
+    pil_image = read_imagefile(dataset, await file.read())
 
-    logits, confidence = get_predictions(dataset, np_image)
+    logits, confidence = get_predictions(dataset, pil_image)
     return {"predict": logits, "confidence": confidence}
