@@ -48,5 +48,5 @@ class EfficientDetLiteV4Inference(Inference):
         pil_image = Image.fromarray(visualized_np_image)
         pil_image.save("./output_result.png")
 
-    def __call__(self, image: np.array):
+    def __call__(self, image: Image.Image):
         return self.call(image)
