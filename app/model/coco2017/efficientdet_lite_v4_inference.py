@@ -46,7 +46,7 @@ class EfficientDetLiteV4Inference(Inference):
         visualized_np_image = tf.cast(tf.squeeze(visualized_image, axis=0), dtype=tf.uint8).numpy()
         
         pil_image = Image.fromarray(visualized_np_image)
-        pil_image.save("./test_result.png")
+        pil_image.save("./output_result.png")
 
     def __call__(self, image: np.array):
         return self.call(image)
