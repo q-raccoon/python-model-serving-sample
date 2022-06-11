@@ -21,8 +21,15 @@ class EfficientDetLiteV4Handler(Handler):
         super().__init__()
 
     def handle(self, request):
+        """ 
+            predictions: {
+                            'output_0': boxes ([batch, num_detections, 4]), 
+                            'output_1': scores ([batch, num_detections]), 
+                            'output_2': classes ([batch, num_detections]), 
+                            'output_3': num_detections (1)
+                         }
+        """
         predictions = self.serving_fn(request)
-
         return predictions
 
     def __call__(self, request):
