@@ -28,7 +28,7 @@ class EfficientDetLiteV4Inference(Inference):
         scores = predictions["output_1"][0]
         classes = predictions["output_2"][0]
         
-        selected_boxes_index = tf.image.non_max_suppression(boxes, scores, 3)
+        selected_boxes_index = tf.image.non_max_suppression(boxes, scores, max_output_size=10, iou_threshold=0.5, score_threshold=0.5)
         selected_boxes = tf.gather(boxes, selected_boxes_index)
         selected_scores = tf.gather(scores, selected_boxes_index)
         selected_classes = tf.gather(classes, selected_boxes_index)
