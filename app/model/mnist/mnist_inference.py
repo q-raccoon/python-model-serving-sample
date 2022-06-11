@@ -9,7 +9,7 @@ class MnistInference(Inference):
         self.handler_ = MnistHandler()
         super().__init__()
 
-    def call(self, image: np.array):
+    def call(self, image: Image.Image):
         preprocessed_image = self.preprocess(image)
         results =  self.handler_(preprocessed_image)
         return results
@@ -22,5 +22,5 @@ class MnistInference(Inference):
         expanded_image = np.expand_dims(normalized_image, 0)
         return expanded_image.astype(dtype=np.float32)
 
-    def __call__(self, image: np.array):
+    def __call__(self, image: Image.Image):
         return self.call(image)
