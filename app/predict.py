@@ -19,7 +19,7 @@ def get_predictions(dataset: Dataset = Dataset.mnist, image: Image.Image = None)
     elif dataset == Dataset.coco2017:
         global efficient_det_lite_v4_inference
         if efficient_det_lite_v4_inference is None:
-            efficient_det_lite_v4_inference = EfficientDetLiteV4Inference()
+            efficient_det_lite_v4_inference = EfficientDetLiteV4Inference(draw_image=False)
         inference = efficient_det_lite_v4_inference
     else:
         raise RuntimeError("`{}` is not supported yet.".format(dataset))

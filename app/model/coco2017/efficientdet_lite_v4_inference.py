@@ -5,16 +5,17 @@ from ..inference import Inference
 from PIL import Image
 
 class EfficientDetLiteV4Inference(Inference):
-    def __init__(self) -> None:
+    def __init__(self, draw_image: bool) -> None:
         self.handler_ = EfficientDetLiteV4Handler()
+        self.draw_image_ = draw_image
         super().__init__()
 
-    def call(self, image: Image.Image, draw_image: bool=True):
+    def call(self, image: Image.Image):
         preprocessed_image = self.preprocess(image)
         predictions =  self.handler_(preprocessed_image)
         bboxes, _, _ = self.postprocess(predictions)
 
-        if draw_image:
+        if self.draw_image_:
             self.draw_bounding_boxes(images=preprocessed_image, bboxes=bboxes)
         return bboxes
 
