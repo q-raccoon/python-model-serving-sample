@@ -1,11 +1,12 @@
 import time
-from routers import image_classification
+from routers import image_classification, object_detection
 from loguru import logger
 from fastapi import FastAPI, Request
 import numpy as np
 
 app = FastAPI()
 app.include_router(image_classification.router)
+app.include_router(object_detection.router)
 
 @app.middleware("http")
 async def check_inference_latency(request: Request, call_next):
