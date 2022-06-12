@@ -14,6 +14,5 @@ async def predict_api(dataset: Dataset = Dataset.coco2017, file: UploadFile = Fi
 
     pil_image = read_imagefile(dataset, await file.read())
 
-    # TODO
-    get_predictions(dataset, pil_image)
-    return {"predict": ""}
+    bboxes_and_labels = get_predictions(dataset, pil_image)
+    return {"bboxes_and_labels": bboxes_and_labels}
