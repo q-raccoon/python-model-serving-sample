@@ -9,14 +9,15 @@ ENV DET_MODEL_EXPORT_PATH="/code/coco2017/efficientdet_lite4_detection"
 
 WORKDIR /code
 
-COPY ./mnist /code/mnist
-COPY ./coco2017/ /code/coco2017
+# (TODO) Move model to model store.
+COPY ./app/mnist /code/mnist
+COPY ./app/coco2017/ /code/coco2017
 
-COPY ./requirements.txt /code/requirements.txt
+COPY ./app/requirements.txt /code/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-COPY ./ /code/app
+COPY ./app /code/app
 
 WORKDIR /code/app
 
