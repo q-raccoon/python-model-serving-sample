@@ -5,6 +5,9 @@ services:
     build: 
       context: .
       dockerfile: ./app/Dockerfile
+    volumes:
+      - data1-1:/data1
+      - data1-2:/data2
     ports:
       - 8000:8080
   minio1:
