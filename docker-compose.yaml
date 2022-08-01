@@ -4,7 +4,7 @@ services:
   api:
     build: 
       context: .
-      dockerfile: ./app/Dockerfile
+      dockerfile: ./fastapi_serving/Dockerfile
     volumes:
       - data1-1:/data1
       - data1-2:/data2
