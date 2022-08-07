@@ -4,9 +4,10 @@ on:
   pull_request:
     branches: [master]
 
+permissions: write-all
+
 jobs:
   build:
-    permissions: write-all
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -33,5 +34,3 @@ jobs:
         message: |
             Looks good. :wave:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
-  
