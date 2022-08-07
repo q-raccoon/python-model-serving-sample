@@ -12,8 +12,8 @@ jobs:
         with:
           python-version: "3.6.9"
       - run: |
-        pip install -r fastapi_serving/requirements.txt
-        pip install requests --user
+          pip install -r fastapi_serving/requirements.txt
+          pip install requests --user
       - name: Run tests
         working-directory: ./fastapi_serving
         run: pytest
