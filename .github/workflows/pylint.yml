@@ -29,8 +29,13 @@ jobs:
       run: |
         pylint $(git ls-files '*.py') -d=R,C,W || exit 0
     - name: Comment on PR
-      uses: thollander/actions-comment-pull-request@v1
+      uses: actions/github-script@v3
       with:
-        message: |
-            Looks good. :wave:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Looks good! :wave:'
+            })
