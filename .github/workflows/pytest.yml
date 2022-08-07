@@ -5,13 +5,15 @@ on:
 
 jobs:
   run-test-code:
-    runs-on: tensorflow/tensorflow:latest-gpu
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: "3.6.9"
-      - run: pip install -r fastapi_serving/requirements.txt
+      - run: |
+        pip install -r fastapi_serving/requirements.txt
+        pip install requests --user
       - name: Run tests
         working-directory: ./fastapi_serving
         run: pytest
