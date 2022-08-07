@@ -29,13 +29,13 @@ jobs:
       run: |
         pylint $(git ls-files '*.py') -d=R,C,W || exit 0
     - name: Comment on PR
-      uses: actions/github-script@v3
+      uses: actions/github-script@v5
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'Looks good! :wave:'
-            })
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'Looks good! :wave:'
+          })
