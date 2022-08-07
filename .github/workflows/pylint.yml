@@ -33,4 +33,5 @@ jobs:
         message: |
             Looks good. :wave:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: ${{ github.ref }}
   
