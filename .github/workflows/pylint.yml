@@ -1,8 +1,10 @@
-name: Pylint
+name: pylint
 
 on: 
   pull_request:
     branches: [master]
+
+permissions: write-all
 
 jobs:
   build:
@@ -18,15 +20,22 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install pylint
+          pip install -r fastapi_serving/requirements.txt
+          pip install requests --user
+          pip install tensorflow==2.3.0
+          pip install pylint
     - name: Analysing the code with pylint
+      working-directory: ./fastapi_serving
       run: |
-        pylint $(git ls-files '*.py') -d=R,C,W
+        pylint $(git ls-files '*.py') -d=R,C,W || exit 0
     - name: Comment on PR
-      uses: thollander/actions-comment-pull-request@v1
+      uses: actions/github-script@v5
       with:
-        message: |
-            Looks good. :wave:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'Looks good! :wave:'
+          })
